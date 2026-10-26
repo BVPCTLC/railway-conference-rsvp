@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Railway Conference – RSVP</title>
+<meta name="description" content="Official RSVP for the Railway Conference, 01 November 2026.">
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --navy:#0B1F3A;
+    --navy-soft:#3B4B63;
+    --gold:#B08D3C;
+    --gold-soft:#E9DDBF;
+    --bg:#FAF7F0;
+    --card:#FFFFFF;
+    --line:#E3DDCF;
+    --error:#A32020;
+    --error-bg:#FBEFEF;
+    --ok:#1F5E3B;
+    --ok-bg:#EDF6F0;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; min-height:100vh;
+    background:var(--bg); color:var(--navy);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;
+    display:flex; align-items:center; justify-content:center;
+    padding:32px 16px;
+  }
+  .card{
+    width:100%; max-width:520px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-top:3px solid var(--gold);
+    border-radius:var(--radius);
+    box-shadow:0 10px 30px rgba(11,31,58,.07);
+    padding:40px 36px 28px;
+  }
+  header{text-align:center; margin-bottom:28px}
+  .eyebrow{
+    display:inline-block; font-size:.72rem; letter-spacing:.22em; font-weight:600;
+    color:var(--gold); text-transform:uppercase; margin:0 0 14px;
+  }
+  h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:600; font-size:2.1rem; line-height:1.2; margin:0 0 14px; letter-spacing:.01em;
+  }
+  .rule{width:48px; height:2px; background:var(--gold); margin:0 auto 16px; border:0}
+  .when{margin:0; font-size:1.02rem; font-weight:500}
+  .when span{display:block}
+  .when span + span{color:var(--navy-soft); font-weight:400}
+  .subtitle{margin:16px 0 0; color:var(--navy-soft); font-size:.95rem}
+
+  .field{margin-bottom:20px; border:0; padding:0; min-width:0}
+  label, legend{display:block; font-size:.88rem; font-weight:600; margin-bottom:6px; padding:0}
+  .req{color:var(--gold); margin-left:2px}
+  input[type=text], input[type=number], select{
+    width:100%; font:inherit; color:var(--navy);
+    padding:12px 14px; background:#fff;
+    border:1px solid #CFC8B6; border-radius:8px;
+    transition:border-color .15s, box-shadow .15s;
+    min-height:46px;
+  }
+  select{appearance:none; -webkit-appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--navy-soft) 50%),linear-gradient(135deg,var(--navy-soft) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 20px, calc(100% - 13px) 20px;
+    background-size:5px 5px; background-repeat:no-repeat; padding-right:34px;
+  }
+  input:focus, select:focus, button:focus-visible{
+    outline:3px solid rgba(176,141,60,.45); outline-offset:1px; border-color:var(--gold);
+  }
+  .time-row{display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:center}
+  .time-row .colon{font-weight:600; color:var(--navy-soft)}
+  .hint{font-size:.8rem; color:var(--navy-soft); margin:6px 0 0}
+  .err{display:none; font-size:.82rem; color:var(--error); margin:6px 0 0}
+  .field.invalid .err{display:block}
+  .field.invalid input, .field.invalid select{border-color:var(--error); background:var(--error-bg)}
+
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+
+  button.submit{
+    width:100%; min-height:50px; margin-top:6px;
+    font:inherit; font-weight:600; letter-spacing:.04em;
+    color:#fff; background:var(--navy);
+    border:1px solid var(--navy); border-radius:8px; cursor:pointer;
+    transition:background .15s, box-shadow .15s;
+  }
+  button.submit:hover{background:#13305A}
+  button.submit[disabled]{opacity:.65; cursor:not-allowed}
+
+  .banner{display:none; border-radius:8px; padding:12px 14px; font-size:.9rem; margin:0 0 20px}
+  .banner.show{display:block}
+  .banner.error{background:var(--error-bg); color:var(--error); border:1px solid #E7BDBD}
+  .banner.warn{background:#FFF8E5; color:#6B5310; border:1px solid var(--gold-soft)}
+
+  .success{display:none; text-align:center; padding:8px 0 4px}
+  .success.show{display:block}
+  .tick{
+    width:54px; height:54px; border-radius:50%; margin:0 auto 16px;
+    border:2px solid var(--gold); display:flex; align-items:center; justify-content:center;
+    color:var(--gold); font-size:1.6rem;
+  }
+  .success h2{font-family:Georgia,serif; font-weight:600; font-size:1.5rem; margin:0 0 8px}
+  .success p{margin:0 0 6px; color:var(--navy-soft)}
+  .summary{
+    text-align:left; margin:20px 0 18px; padding:14px 16px;
+    background:var(--bg); border:1px solid var(--line); border-radius:8px; font-size:.9rem;
+  }
+  .summary div{display:flex; justify-content:space-between; gap:12px; padding:4px 0}
+  .summary dt{color:var(--navy-soft)} .summary dd{margin:0; font-weight:600; text-align:right}
+  .linkbtn{
+    background:none; border:0; font:inherit; color:var(--navy); text-decoration:underline;
+    cursor:pointer; padding:6px; text-underline-offset:3px;
+  }
+
+  footer{text-align:center; margin-top:26px; padding-top:20px; border-top:1px solid var(--line)}
+  footer .welcome{font-family:Georgia,serif; font-style:italic; margin:0 0 10px}
+  footer .small{font-size:.75rem; color:var(--navy-soft); letter-spacing:.06em; margin:0}
+
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+  @media (max-width:480px){
+    body{padding:16px 12px; align-items:flex-start}
+    .card{padding:28px 20px 22px}
+    h1{font-size:1.75rem}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+  <header>
+    <p class="eyebrow">Official Event RSVP</p>
+    <h1>Railway Conference</h1>
+    <hr class="rule">
+    <p class="when"><span>01 November 2026</span><span>10:00 Hrs onwards</span></p>
+    <p class="subtitle">Kindly confirm your attendance by completing the form below.</p>
+  </header>
+
+  <div id="configBanner" class="banner warn" role="status">
+    Setup required: the organiser has not yet connected this page to the response sheet. Submissions are disabled until then.
+  </div>
+  <div id="errorBanner" class="banner error" role="alert" tabindex="-1"></div>
+
+  <form id="rsvpForm" novalidate autocomplete="off">
+    <div class="field" id="f-name">
+      <label for="name">Full Name <span class="req" aria-hidden="true">*</span></label>
+      <input type="text" id="name" name="name" maxlength="100" required autocomplete="name" aria-describedby="e-name">
+      <p class="err" id="e-name"></p>
+    </div>
+
+    <div class="field" id="f-persons">
+      <label for="persons">No. of Persons Attending <span class="req" aria-hidden="true">*</span></label>
+      <input type="number" id="persons" name="persons" min="1" max="999" step="1" inputmode="numeric" required aria-describedby="h-persons e-persons">
+      <p class="hint" id="h-persons">Total number of persons attending, including yourself.</p>
+      <p class="err" id="e-persons"></p>
+    </div>
+
+    <fieldset class="field" id="f-arrival">
+      <legend>Arrival Time (24-hour) <span class="req" aria-hidden="true">*</span></legend>
+      <div class="time-row">
+        <select id="arrH" aria-label="Arrival hour" aria-describedby="e-arrival" required></select>
+        <span class="colon" aria-hidden="true">:</span>
+        <select id="arrM" aria-label="Arrival minutes" aria-describedby="e-arrival" required></select>
+      </div>
+      <p class="err" id="e-arrival"></p>
+    </fieldset>
+
+    <fieldset class="field" id="f-departure">
+      <legend>Departing Time (24-hour) <span class="req" aria-hidden="true">*</span></legend>
+      <div class="time-row">
+        <select id="depH" aria-label="Departing hour" aria-describedby="h-dep e-departure" required></select>
+        <span class="colon" aria-hidden="true">:</span>
+        <select id="depM" aria-label="Departing minutes" aria-describedby="h-dep e-departure" required></select>
+      </div>
+      <p class="hint" id="h-dep">Both times refer to 01 November 2026; departure must be later than arrival.</p>
+      <p class="err" id="e-departure"></p>
+    </fieldset>
+
+    <!-- Honeypot: real guests never see or fill this -->
+    <div class="hp" aria-hidden="true">
+      <label for="website">Website</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <button type="submit" class="submit" id="submitBtn">Confirm Attendance</button>
+  </form>
+
+  <section class="success" id="success" aria-live="polite" tabindex="-1">
+    <div class="tick" aria-hidden="true">✓</div>
+    <h2>Attendance Confirmed</h2>
+    <p>Thank you. Your response has been recorded.</p>
+    <dl class="summary" id="summary"></dl>
+    <button type="button" class="linkbtn" id="againBtn">Submit another response</button>
+  </section>
+
+  <footer>
+    <p class="welcome">We look forward to your presence.</p>
+    <p class="small">Railway Conference | 01 November 2026</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     ORGANISER CONFIGURATION — REQUIRED
+     Paste the Google Apps Script Web App URL between the quotes.
+     It looks like: https://script.google.com/macros/s/XXXXXXXX/exec
+     Until this is set, the form will refuse to submit.
+     ============================================================ */
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1uPAus8I1dLMdF506_CgOn6i-uPRIFEh0WHYRvB1sLKf3zodfBASVcSB97AZHZQiZ/exec";
+
+  var TIMEOUT_MS = 25000;
+
+  var form = document.getElementById("rsvpForm");
+  var btn = document.getElementById("submitBtn");
+  var errorBanner = document.getElementById("errorBanner");
+  var configBanner = document.getElementById("configBanner");
+  var success = document.getElementById("success");
+  var summary = document.getElementById("summary");
+
+  var configured = /^https:\/\/script\.google\.com\/macros\/s\/[^\s]+\/exec$/.test(APPS_SCRIPT_URL);
+  if (configured) { configBanner.classList.remove("show"); configBanner.style.display = "none"; }
+  else { configBanner.classList.add("show"); }
+
+  /* ---------- Time selects (guarantees 24-hour display everywhere) ---------- */
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function fill(sel, label, max, step) {
+    var o = document.createElement("option");
+    o.value = ""; o.textContent = label; sel.appendChild(o);
+    for (var i = 0; i < max; i += step) {
+      var opt = document.createElement("option");
+      opt.value = pad(i); opt.textContent = pad(i); sel.appendChild(opt);
+    }
+  }
+  ["arrH", "depH"].forEach(function (id) { fill(document.getElementById(id), "HH", 24, 1); });
+  ["arrM", "depM"].forEach(function (id) { fill(document.getElementById(id), "MM", 60, 5); });
+
+  /* ---------- Validation ---------- */
+  function setError(fieldId, errId, msg) {
+    var f = document.getElementById(fieldId), e = document.getElementById(errId);
+    if (msg) { f.classList.add("invalid"); e.textContent = msg; }
+    else { f.classList.remove("invalid"); e.textContent = ""; }
+    return !msg;
+  }
+  function getTime(h, m) {
+    var hv = document.getElementById(h).value, mv = document.getElementById(m).value;
+    return (hv !== "" && mv !== "") ? hv + ":" + mv : "";
+  }
+
+  function validate() {
+    var firstBad = null;
+    function note(ok, el) { if (!ok && !firstBad) firstBad = el; }
+
+    var name = document.getElementById("name").value.trim().replace(/\s+/g, " ");
+    var nameMsg = "";
+    if (!name) nameMsg = "Please enter your full name.";
+    else if (name.length < 2) nameMsg = "Name must be at least 2 characters.";
+    note(setError("f-name", "e-name", nameMsg), document.getElementById("name"));
+
+    var raw = document.getElementById("persons").value.trim();
+    var pMsg = "";
+    if (raw === "") pMsg = "Please enter the number of persons attending.";
+    else if (!/^\d+$/.test(raw)) pMsg = "Enter a whole number (no decimals or negative values).";
+    else if (parseInt(raw, 10) < 1) pMsg = "At least 1 person must attend.";
+    else if (parseInt(raw, 10) > 999) pMsg = "Please enter a number not greater than 999.";
+    note(setError("f-persons", "e-persons", pMsg), document.getElementById("persons"));
+
+    var arr = getTime("arrH", "arrM"), dep = getTime("depH", "depM");
+    var aMsg = arr ? "" : "Please select the arrival time (hour and minutes).";
+    note(setError("f-arrival", "e-arrival", aMsg), document.getElementById(document.getElementById("arrH").value === "" ? "arrH" : "arrM"));
+
+    var dMsg = "";
+    if (!dep) dMsg = "Please select the departing time (hour and minutes).";
+    else if (arr && dep <= arr) dMsg = "Departing time must be later than the arrival time (same day).";
+    note(setError("f-departure", "e-departure", dMsg),
+      document.getElementById(document.getElementById("depH").value === "" ? "depH" : (!dep ? "depM" : "depH")));
+
+    if (firstBad) { firstBad.focus(); return null; }
+    return { name: name, persons: parseInt(raw, 10), arrival: arr, departure: dep };
+  }
+
+  ["name", "persons", "arrH", "arrM", "depH", "depM"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", function () {
+      var map = { name: ["f-name", "e-name"], persons: ["f-persons", "e-persons"],
+        arrH: ["f-arrival", "e-arrival"], arrM: ["f-arrival", "e-arrival"],
+        depH: ["f-departure", "e-departure"], depM: ["f-departure", "e-departure"] };
+      setError(map[id][0], map[id][1], "");
+      if (id.indexOf("arr") === 0) setError("f-departure", "e-departure", "");
+    });
+  });
+
+  /* ---------- Submission ---------- */
+  // One ID per attempt; reused on retry so the server can discard duplicates.
+  var attemptId = null;
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "id-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
+  }
+  function showError(msg) {
+    errorBanner.textContent = msg;
+    errorBanner.classList.add("show");
+    errorBanner.focus();
+  }
+  function clearError() { errorBanner.classList.remove("show"); errorBanner.textContent = ""; }
+  function setBusy(b) {
+    btn.disabled = b;
+    btn.textContent = b ? "Submitting…" : "Confirm Attendance";
+    form.setAttribute("aria-busy", b ? "true" : "false");
+  }
+
+  var inFlight = false;
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (inFlight) return;
+    clearError();
+
+    var data = validate();
+    if (!data) return;
+
+    if (!configured) {
+      showError("This registration page has not been connected to the response sheet yet. Please contact the organiser.");
+      return;
+    }
+    if (document.getElementById("website").value) { return; } // bot
+
+    if (!attemptId) attemptId = newId();
+    data.submissionId = attemptId;
+    data.website = "";
+
+    inFlight = true; setBusy(true);
+
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
+
+    // text/plain avoids a CORS preflight, which Apps Script cannot answer.
+    fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(data),
+      redirect: "follow",
+      signal: ctrl ? ctrl.signal : undefined
+    })
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function (res) {
+      if (!res || res.ok !== true) throw new Error((res && res.error) || "Not saved");
+      showSuccess(data);
+    })
+    .catch(function (err) {
+      var msg = "Your response could not be saved. Your details have been kept — please check your connection and press “Confirm Attendance” again.";
+      if (err && err.message && err.message.indexOf("Not saved") === -1 && /^[A-Za-z0-9 ,.'()\-]{3,120}$/.test(err.message) && err.message.indexOf("HTTP") !== 0 && err.name !== "AbortError" && err.name !== "TypeError" && err.name !== "SyntaxError") {
+        msg = "Your response could not be saved: " + err.message + ". Your details have been kept; please correct them and try again.";
+      }
+      showError(msg);
+    })
+    .then(function () {
+      clearTimeout(timer);
+      inFlight = false; setBusy(false);
+    });
+  });
+
+  function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+  function showSuccess(d) {
+    summary.innerHTML =
+      "<div><dt>Name</dt><dd>" + esc(d.name) + "</dd></div>" +
+      "<div><dt>Persons</dt><dd>" + d.persons + "</dd></div>" +
+      "<div><dt>Arrival</dt><dd>" + d.arrival + " Hrs</dd></div>" +
+      "<div><dt>Departure</dt><dd>" + d.departure + " Hrs</dd></div>";
+    form.style.display = "none";
+    configBanner.style.display = "none";
+    success.classList.add("show");
+    success.focus();
+    attemptId = null;
+  }
+
+  document.getElementById("againBtn").addEventListener("click", function () {
+    form.reset();
+    success.classList.remove("show");
+    form.style.display = "";
+    if (!configured) configBanner.style.display = "";
+    clearError();
+    document.getElementById("name").focus();
+  });
+})();
+</script>
+</body>
+</html>
